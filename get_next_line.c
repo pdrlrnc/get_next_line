@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 10:26:40 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/05 15:50:24 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:42:39 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ char	*get_next_line_cont(int fd, char *buffer, char *result)
 	result = NULL;
 	result = ft_process_buffer(buffer, result, &i, &j);
 	if (i == -1)
-	{
-		
 		return (NULL);
-	}
 	if (i < BUFFER_SIZE)
 		return (ft_handle_new_line(buffer, result, i, j));
 	while (ft_read_data(fd, buffer, &bytes_read) != 0)
@@ -58,11 +55,12 @@ char	*get_next_line_cont(int fd, char *buffer, char *result)
 			free(result);
 			return (NULL);
 		}
-		if (i < BUFFER_SIZE)
+		if (i < bytes_read)
 			return (ft_handle_new_line(buffer, result, i, j));
 	}
 	return (result);
 }
+/*
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -77,9 +75,11 @@ int	main(int argc, char **argv)
 		while (result != NULL)
 		{
 			printf("call #%d: %s", i, result);
+			free(result);
 			result = get_next_line(fd);
 			i++;
 		}
+		free(result);
 		close(fd);
 	}
-}
+}*/
