@@ -6,10 +6,11 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 10:26:40 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/13 13:14:14 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:17:12 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 1024
@@ -44,20 +45,17 @@ char	*get_next_line_cont(int fd, char *buffer, char *result)
 			if (!result)
 				return (NULL);
 			buffer = ft_process_buffer(buffer, i + 1);
-			if (i < BUFFER_SIZE)
+			if (*(result + i) && i < BUFFER_SIZE)
 				return (result);
 		}
 		bytes_read = ft_read_data(fd, buffer);
 		buffer[bytes_read] = '\0';
 	}
-	if (!bytes_read)
-	{
-		free(result);
+	if (!bytes_read && !result)
 		return (NULL);
-	}
 	return (result);
 }
-
+/*
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -79,4 +77,4 @@ int	main(int argc, char **argv)
 		free(result);
 		close(fd);
 	}
-}
+}*/

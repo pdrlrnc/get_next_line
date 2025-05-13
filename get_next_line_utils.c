@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:50:13 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/13 14:32:42 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:14:34 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_realloc(char *result, int i, int *r)
 	if (result)
 		while (*(result + *r))
 			(*r)++;
-	new_result = malloc(i + *r + 1);
+	new_result = malloc(i + *r + 2);
 	if (!new_result)
 	{
 		if (result)
