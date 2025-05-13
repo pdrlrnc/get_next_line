@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:50:13 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/13 15:53:43 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:50:20 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-int	ft_find_init_nl(char *buff)
+int	ft_find_init_nl(char *buff, int fd)
 {
 	int	i;
 
 	i = 0;
-	while (*(buff + i) && *(buff + i) != '\n')
+	while (*(buff + fd * BUFFER_SIZE + i) && *(buff + fd * BUFFER_SIZE + i) != '\n')
 		i++;
 	return (i);
 }
 
-char	*ft_handle_new_line(char *buff, char *result, int i)
+char	*ft_handle_new_line(char *buff, char *result, int i, int fd)
 {
 	int	r;
 	int	k;
@@ -33,8 +33,8 @@ char	*ft_handle_new_line(char *buff, char *result, int i)
 	r = 0;
 	while (r <= i)
 	{
-		*(result + k) = *(buff + r);
-		*(buff + r) = '\0';
+		*(result + k) = *(buff + fd * BUFFER_SIZE + r);
+		*(buff + fd * BUFFER_SIZE + r) = '\0';
 		r++;
 		k++;
 	}
@@ -43,15 +43,15 @@ char	*ft_handle_new_line(char *buff, char *result, int i)
 	
 }
 
-char	*ft_process_buffer(char *buff, int i)
+char	*ft_process_buffer(char *buff, int i, int fd)
 {
 	int	k;
 
 	k = 0;
-	while (*(buff + i) && i < BUFFER_SIZE)
+	while (*(buff +  fd * BUFFER_SIZE + i) && i < BUFFER_SIZE)
 	{
-		*(buff + k) = *(buff + i);
-		*(buff + i) = '\0';
+		*(buff + fd * BUFFER_SIZE + k) = *(buff + fd * BUFFER_SIZE + i);
+		*(buff + fd * BUFFER_SIZE + i) = '\0';
 		i++;
 		k++;
 	}
@@ -67,18 +67,18 @@ char	*get_next_line_cont(int fd, char *buffer, char *result, int bytes_read)
 	{
 		if (bytes_read != -2)
 		{
-			i = ft_find_init_nl(buffer);
-			result = ft_handle_new_line(buffer, result, i);
+			i = ft_find_init_nl(buffer, fd);
+			result = ft_handle_new_line(buffer, result, i, fd);
 			if (!result)
 				return (NULL);
-			buffer = ft_process_buffer(buffer, i + 1);
+			buffer = ft_process_buffer(buffer, i + 1, fd);
 			if (*(result + i) && i < BUFFER_SIZE)
 				return (result);
 		}
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		bytes_read = read(fd, buffer + fd * BUFFER_SIZE, BUFFER_SIZE);
 		if (bytes_read == -1)
 			return (free(result), NULL);
-		buffer[bytes_read] = '\0';
+		*(buffer + fd * BUFFER_SIZE + bytes_read) = '\0';
 	}
 	if (!bytes_read && !result)
 		return (NULL);
