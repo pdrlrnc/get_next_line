@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 10:27:08 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/05 13:10:06 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:13:06 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 # include <stdio.h>
 
 char	*get_next_line(int fd);
-char	*ft_realloc(char *result);
-char	*ft_process_buffer(char *buff, char *result, int *i, int *j);
-char	*ft_handle_new_line(char *buff, char *result, int i, int j);
-int		ft_read_data(int fd, char *buff, int *bytes_read);
 char	*get_next_line_cont(int fd, char *buffer, char *result);
+int	ft_find_init_nl(char *buff);
+char	*ft_handle_new_line(char *buff, char *result, int i);
+char	*ft_process_buffer(char *buff, int i);
+int	ft_read_data(int fd, char *buff);
+char	*ft_realloc(char *result, int i, int *r);
 
 #endif

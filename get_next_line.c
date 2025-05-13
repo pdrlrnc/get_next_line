@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 10:26:40 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/08 15:42:39 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:14:14 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,38 +29,35 @@ char	*get_next_line(int fd)
 char	*get_next_line_cont(int fd, char *buffer, char *result)
 {
 	int	i;
-	int	j;
 	int	bytes_read;
 
-	i = 0;
-	j = 0;
 	result = NULL;
-	result = ft_process_buffer(buffer, result, &i, &j);
-	if (i == -1)
-		return (NULL);
-	if (i < BUFFER_SIZE)
-		return (ft_handle_new_line(buffer, result, i, j));
-	while (ft_read_data(fd, buffer, &bytes_read) != 0)
+	bytes_read = 1;
+	if (!buffer[0])
+		bytes_read = -1;
+	while (bytes_read)
 	{
-		if (bytes_read == -1)
+		if (bytes_read != -1)
 		{
-			free(result);
-			return (NULL);
+			i = ft_find_init_nl(buffer);
+			result = ft_handle_new_line(buffer, result, i);
+			if (!result)
+				return (NULL);
+			buffer = ft_process_buffer(buffer, i + 1);
+			if (i < BUFFER_SIZE)
+				return (result);
 		}
+		bytes_read = ft_read_data(fd, buffer);
 		buffer[bytes_read] = '\0';
-		i = 0;
-		result = ft_process_buffer(buffer, result, &i, &j);
-		if (i == -1)
-		{
-			free(result);
-			return (NULL);
-		}
-		if (i < bytes_read)
-			return (ft_handle_new_line(buffer, result, i, j));
+	}
+	if (!bytes_read)
+	{
+		free(result);
+		return (NULL);
 	}
 	return (result);
 }
-/*
+
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -82,4 +79,4 @@ int	main(int argc, char **argv)
 		free(result);
 		close(fd);
 	}
-}*/
+}

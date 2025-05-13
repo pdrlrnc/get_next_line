@@ -6,77 +6,89 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:50:13 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/08 15:14:27 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:12:42 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_process_buffer(char *buff, char *result, int *i, int *j)
+int	ft_find_init_nl(char *buff)
 {
-	while (*i < BUFFER_SIZE && buff[*i] == '\0')
-		(*i)++;
-	if (*i < BUFFER_SIZE)
-	{
-		while (*i < BUFFER_SIZE && buff[*i] != '\0' && buff[*i] != '\n')
-		{
-			result = ft_realloc(result);
-			if (!result)
-			{
-				*i = -1;
-				return (NULL);
-			}
-			*(result + *(j)) = buff[*i];
-			buff[*(i)] = '\0';
-			*j = *j + 1;
-			*i = *i + 1;
-		}
-	}
-	return (result);
+	int	i;
+
+	i = 0;
+	while (*buff && *(buff + i) != '\n')
+		i++;
+	return (i);
 }
 
-char	*ft_handle_new_line(char *buff, char *result, int i, int j)
+char	*ft_handle_new_line(char *buff, char *result, int i)
 {
-	result = ft_realloc(result);
+	int	r;
+	int	k;
+
+	result = ft_realloc(result, i, &k);
 	if (!result)
 		return (NULL);
-	*(result + j) = '\n';
-	buff[i] = '\0';
+	r = 0;
+	while (r <= i)
+	{
+		*(result + k) = *(buff + r);
+		*(buff + r) = '\0';
+		r++;
+		k++;
+	}
+	*(result + k) = '\0';
 	return (result);
+	
 }
 
-int	ft_read_data(int fd, char *buff, int *bytes_read)
+char	*ft_process_buffer(char *buff, int i)
 {
-	*bytes_read = read(fd, buff, BUFFER_SIZE);
-	return (*bytes_read);
+	int	k;
+
+	k = 0;
+	while (*(buff + i) && i < BUFFER_SIZE)
+	{
+		*(buff + k) = *(buff + i);
+		*(buff + i) = '\0';
+		i++;
+		k++;
+	}
+	return (buff);
 }
 
-char	*ft_realloc(char *result)
+int	ft_read_data(int fd, char *buff)
 {
-	int		i;
+	int	bytes_read;
+
+	bytes_read = read(fd, buff, BUFFER_SIZE);
+	return (bytes_read);
+}
+
+char	*ft_realloc(char *result, int i, int *r)
+{
 	char	*new_result;
 
-	if (result == NULL)
-	{
-		new_result = malloc(2);
-		if (!new_result)
-			return (NULL);
-		*(new_result + 1) = '\0';
-		return (new_result);
-	}
-	i = 0;
-	while (*(result + i))
-		i++;
-	new_result = malloc(i + 2);
+	*r = 0;	
+	if (result)
+		while (*(result + *r))
+			(*r)++;
+	new_result = malloc(i + *r + 1);
 	if (!new_result)
 	{
-		free(result);
+		if (result)
+			free(result);
 		return (NULL);
 	}
-	i = -1;
-	while (*(result + ++i))
-		*(new_result + i) = *(result + i);
+	if (!result)
+		return (new_result);
+	*r = 0;
+	while (*(result + *r))
+	{
+		*(new_result + *r) = *(result + *r);
+		(*r)++;
+	}
 	free(result);
-	*(new_result + i + 1) = '\0';
 	return (new_result);
 }
