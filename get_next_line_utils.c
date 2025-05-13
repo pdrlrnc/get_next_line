@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:50:13 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/13 13:12:42 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:32:42 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_find_init_nl(char *buff)
 	int	i;
 
 	i = 0;
-	while (*buff && *(buff + i) != '\n')
+	while (*(buff + i) && *(buff + i) != '\n')
 		i++;
 	return (i);
 }
