@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:50:13 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/14 15:22:11 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:34:29 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	ft_find_init_nl(char *buff, int fd)
 	int	i;
 
 	i = 0;
-	while (*(buff + fd * BUFFER_SIZE + i) && *(buff + fd * BUFFER_SIZE + i) != '\n')
+	while (*(buff + fd * BUFFER_SIZE + i)
+		&& *(buff + fd * BUFFER_SIZE + i) != '\n')
 		i++;
 	return (i);
 }
@@ -40,7 +41,6 @@ char	*ft_handle_new_line(char *buff, char *result, int i, int fd)
 	}
 	*(result + k) = '\0';
 	return (result);
-	
 }
 
 char	*ft_process_buffer(char *buff, int i, int fd)
@@ -48,7 +48,7 @@ char	*ft_process_buffer(char *buff, int i, int fd)
 	int	k;
 
 	k = 0;
-	while (*(buff +  fd * BUFFER_SIZE + i) && i < BUFFER_SIZE)
+	while (*(buff + fd * BUFFER_SIZE + i) && i < BUFFER_SIZE)
 	{
 		*(buff + fd * BUFFER_SIZE + k) = *(buff + fd * BUFFER_SIZE + i);
 		*(buff + fd * BUFFER_SIZE + i) = '\0';
@@ -89,7 +89,7 @@ char	*ft_realloc(char *result, int i, int *r)
 {
 	char	*new_result;
 
-	*r = 0;	
+	*r = 0;
 	if (result)
 		while (*(result + *r))
 			(*r)++;

@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:50:13 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/13 15:53:43 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:35:34 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*ft_handle_new_line(char *buff, char *result, int i)
 	}
 	*(result + k) = '\0';
 	return (result);
-	
 }
 
 char	*ft_process_buffer(char *buff, int i)
@@ -89,7 +88,7 @@ char	*ft_realloc(char *result, int i, int *r)
 {
 	char	*new_result;
 
-	*r = 0;	
+	*r = 0;
 	if (result)
 		while (*(result + *r))
 			(*r)++;
