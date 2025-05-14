@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 10:26:40 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/13 18:54:02 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:23:20 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	return (get_next_line_cont(fd, (char *)buffer, result, bytes_read));
 }
-
+/*
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -46,10 +46,10 @@ int	main(int argc, char **argv)
 		second_fd = open(argv[2], O_RDONLY);
 		result = get_next_line(fd);
 		second_result = get_next_line(second_fd);
-		while (result != NULL && second_result != NULL)
+		while (result != NULL || second_result != NULL)
 		{
-			printf("call #%d (first fd): %s", i, result);
-			printf("call #%d (second fd): %s", i, second_result);
+			printf("\n\tcall #%d (first fd): %s", i, result);
+			printf("\n\tcall #%d (second fd): %s", i, second_result);
 			free(result);
 			free(second_result);
 			result = get_next_line(fd);
@@ -63,4 +63,4 @@ int	main(int argc, char **argv)
 		if(second_fd != -1)
 			close(second_fd);
 	}
-}
+}*/

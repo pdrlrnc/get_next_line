@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:50:13 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/13 18:50:20 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:22:11 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ char	*get_next_line_cont(int fd, char *buffer, char *result, int bytes_read)
 			return (free(result), NULL);
 		*(buffer + fd * BUFFER_SIZE + bytes_read) = '\0';
 	}
-	if (!bytes_read && !result)
-		return (NULL);
+	if (!bytes_read && !*result)
+		return (free(result), NULL);
 	return (result);
 }
 
