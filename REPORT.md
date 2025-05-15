@@ -4,7 +4,7 @@
 
 The goal of this project was to implement a function called `get_next_line` that reads from a file descriptor and returns the next line each time it's called. A line is defined as a sequence of characters ending with a newline (`\n`) or the end-of-file (EOF). The function should manage memory and buffering efficiently and return `NULL` when there are no more lines to read.
 
-I can only have three files, get\_next\_line.c, get\_next\_line\_utils.c and get\_next\_line.h. get\_next\_line.c can only have the *char \*get\_next\_line(int fd)* function while utils can have at maximum 5 functions. Every function should have at most 25 lines. Also I wanted to only use one *static* variable in all my code.
+I can only have three files, `get\_next\_line.c`, `get\_next\_line\_utils.c` and `get\_next\_line.h`. get\_next\_line.c can only have the `char *get_next_line(int fd)` function while utils can have at maximum 5 functions. Every function should have at most 25 lines. Also I wanted to only use one *static* variable in all my code.
 
 This implementation also includes the **bonus part**, which allows handling **multiple file descriptors simultaneously** without mixing up their state. The files are the same with \_bonus appended.
 
@@ -13,10 +13,10 @@ This implementation also includes the **bonus part**, which allows handling **mu
 - **Language:** C
 - **Key features:**
   - Dynamically reads lines of any length using a buffer.
-  - Stores leftover data between calls using *static* variables. In my case a buffer that its size can be set during compiling with the flag DBUFFER\_SIZE = X.
+  - Stores leftover data between calls using *static* variables. In my case a buffer that its size can be set during compiling with the flag -D BUFFER\_SIZE = X.
   - Manages multiple file descriptors in the bonus version using the buffer as a matrix instead of an array.
 - **Interesting design decisions:**
-  - At first I was just zeroing buffer positions I had already read but shifting non zero positions of the buffer to the start (`ft\_process\_buffer(char *buff, int i)`) was so much better to work with and less error prone.
+  - At first I was just zeroing buffer positions I had already read and then iterating thru `\0`'s until I found a non-zero character, but shifting non-zero positions of the buffer to its start (`ft_process_buffer(char *buff, int i)`) was so much better to work with and less error prone.
 
 ## 3. Challenges Faced
 
@@ -36,7 +36,8 @@ while (r <= i)
     *(buff + fd * BUFFER_SIZE + r) = '\0';
     r++;
     k++;
-} 
+}
+```
 
 - **Memory leaks and edge cases:**  
   - Off-by-one errors, especially with `\n` and EOF, were a pain.
@@ -61,6 +62,6 @@ while (r <= i)
 
 - [man 2 read](https://man7.org/linux/man-pages/man2/read.2.html)
 - [Stack Overflow - Handling leftover buffers](https://stackoverflow.com/)
-- My own tears and printfs
+- My own tears and gdb
 - My friends and colleagues at 42school Lisboa.
 
