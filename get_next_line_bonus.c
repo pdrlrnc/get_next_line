@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 10:26:40 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/16 10:11:00 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/16 10:26:41 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	return (get_next_line_cont(fd, (char *)buffer, result, bytes_read));
 }
-
+/*
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -54,9 +54,10 @@ int	main(int argc, char **argv)
 		}
 		free(result);
 		free(second_result);
-		if(fd != -1)
+		if (fd != -1)
 			close(fd);
-		if(second_fd != -1)
+		if (second_fd != -1)
 			close(second_fd);
 	}
 }
+*/
