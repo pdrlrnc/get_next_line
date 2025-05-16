@@ -6,7 +6,7 @@
 /*   By: pedde-so <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 14:50:13 by pedde-so          #+#    #+#             */
-/*   Updated: 2025/05/14 15:35:34 by pedde-so         ###   ########.fr       */
+/*   Updated: 2025/05/16 10:15:50 by pedde-so         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,35 +24,35 @@ int	ft_find_init_nl(char *buff)
 
 char	*ft_handle_new_line(char *buff, char *result, int i)
 {
-	int	r;
-	int	k;
+	int	buffer_index;
+	int	result_index;
 
-	result = ft_realloc(result, i, &k);
+	result = ft_realloc(result, i, &result_index);
 	if (!result)
 		return (NULL);
-	r = 0;
-	while (r <= i)
+	buffer_index = 0;
+	while (buffer_index <= i)
 	{
-		*(result + k) = *(buff + r);
-		*(buff + r) = '\0';
-		r++;
-		k++;
+		*(result + result_index) = *(buff + buffer_index);
+		*(buff + buffer_index) = '\0';
+		buffer_index++;
+		result_index++;
 	}
-	*(result + k) = '\0';
+	*(result + result_index) = '\0';
 	return (result);
 }
 
 char	*ft_process_buffer(char *buff, int i)
 {
-	int	k;
+	int	start;
 
-	k = 0;
+	start = 0;
 	while (*(buff + i) && i < BUFFER_SIZE)
 	{
-		*(buff + k) = *(buff + i);
+		*(buff + start) = *(buff + i);
 		*(buff + i) = '\0';
 		i++;
-		k++;
+		start++;
 	}
 	return (buff);
 }
